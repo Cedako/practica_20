@@ -3,10 +3,16 @@ let express = require('express');
 let router = express.Router();
 var info = require('../models/person');
 
+router.get('/persons', function(req,res,next) {
+    info.find(function(err, persons){
+        if (err) return next(err);
+        res.json(persons);
+    });
+});
 
 router.get('/person', (req, res) => {
     res.render('index');
-})
+});
 router.post('/person', async (req, res) => {
     let personInfo = new info({
         firstName: req.body.fname,
